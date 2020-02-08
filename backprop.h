@@ -17,23 +17,21 @@
 #define SUCCESS_CREATE_ARCHITECTURE 0
 #define ERR_CREATE_ARCHITECTURE 1
 
-// comment this to remove trest code
-//#define TEST_CODE
-
 
 int init(void);
 int dinit(void);
 
 int create_architecture(void);
 int initialize_weights(void);
-int feed_input(int i);
+void feed_input(int i);
 void train_neural_net(void);
 void forward_prop(void);
 void compute_cost(int i);
 void back_prop(int p);
 void update_weights(void);
-void get_inputs();
-void get_desired_outputs();
+void get_inputs(void);
+void get_desired_outputs(void);
+void test_nn(void);
 
 int initialize_dummy_weights(void);
 
