@@ -6,9 +6,8 @@
 
 typedef struct layer_t
 {
-		int lid;
-		int num_neu;
-		struct neuron_t *neu; 
+	int num_neu;
+	struct neuron_t *neu; 
 } layer;
 
 layer create_layer(int num_neurons);

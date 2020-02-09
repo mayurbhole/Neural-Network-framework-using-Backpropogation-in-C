@@ -8,7 +8,6 @@
 
 typedef struct neuron_t
 {
-	int nid;
 	float actv;
 	float *out_weights;
 	float bias;
@@ -16,8 +15,7 @@ typedef struct neuron_t
 
 	float dactv;
 	float *dw;
-	float *idw;
-	float db;
+	float dbias;
 	float dz;
 
 	// TODO: Add function pointer for destructor

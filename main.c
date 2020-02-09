@@ -147,9 +147,8 @@ int create_architecture()
 	for(i=0;i<num_layers;i++)
 	{
 		lay[i] = create_layer(num_neurons[i]);		
-		lay[i].lid = i+1;
 		lay[i].num_neu = num_neurons[i];
-		printf("Created Layer: %d\n", lay[i].lid);
+		printf("Created Layer: %d\n", i+1);
 		printf("Number of Neurons in Layer %d: %d\n", i+1,lay[i].num_neu);
 
 		for(j=0;j<num_neurons[i];j++)
@@ -159,8 +158,7 @@ int create_architecture()
 				lay[i].neu[j] = create_neuron(num_neurons[i+1]);
 			}
 
-			lay[i].neu[j].nid = j+1;
-			printf("Neuron %d in Layer %d created\n",lay[i].neu[j].nid,lay[i].lid);	
+			printf("Neuron %d in Layer %d created\n",j+1,i+1);	
 		}
 		printf("\n");
 	}
@@ -176,7 +174,6 @@ int create_architecture()
 
 	return SUCCESS_CREATE_ARCHITECTURE;
 }
-
 
 int initialize_weights(void)
 {
@@ -198,9 +195,9 @@ int initialize_weights(void)
 			for(k=0;k<num_neurons[i+1];k++)
 			{
 				// Initialize Output Weights for each neuron
-					lay[i].neu[j].out_weights[k] = ((double)rand())/((double)RAND_MAX);
-					printf("%d:w[%d][%d]: %f\n",k,i,j, lay[i].neu[j].out_weights[k]);
-					lay[i].neu[j].dw[k] = 0.0;
+				lay[i].neu[j].out_weights[k] = ((double)rand())/((double)RAND_MAX);
+				printf("%d:w[%d][%d]: %f\n",k,i,j, lay[i].neu[j].out_weights[k]);
+				lay[i].neu[j].dw[k] = 0.0;
 			}
 
 			if(i>0) 
@@ -251,32 +248,20 @@ void update_weights(void)
 			}
 			
 			// Update Bias
-			lay[i].neu[j].bias = lay[i].neu[j].bias - (alpha * lay[i].neu[j].db);
+			lay[i].neu[j].bias = lay[i].neu[j].bias - (alpha * lay[i].neu[j].dbias);
 		}
 	}	
 }
 
-
 void forward_prop(void)
 {
 		int i,j,k;
-
-		// Clear previous values
-		for(i=1;i<num_layers;i++)
-		{	
-			for(j=0;j<num_neurons[i];j++)
-			{
-				lay[i].neu[j].dz = 0;
-				lay[i].neu[j].dactv = 0;
-			}
-		}
 
 		for(i=1;i<num_layers;i++)
 		{	
 			for(j=0;j<num_neurons[i];j++)
 			{
 				lay[i].neu[j].z = lay[i].neu[j].bias;
-				lay[i].neu[j].actv = 0;
 
 				for(k=0;k<num_neurons[i-1];k++)
 				{
@@ -304,7 +289,6 @@ void forward_prop(void)
 					printf("OUTPUT: %f\n", lay[i].neu[j].actv);
 				}
 			}
-
 		}
 }
 
@@ -332,19 +316,18 @@ void back_prop(int p)
 {
 	int i,j,k;
 
-	// Final Layer
+	// Output Layer
 	for(j=0;j<num_neurons[num_layers-1];j++)
 	{			
 		lay[num_layers-1].neu[j].dz = (lay[num_layers-1].neu[j].actv - desired_outputs[p][j]) * (lay[num_layers-1].neu[j].actv) * (1- lay[num_layers-1].neu[j].actv);
 
 		for(k=0;k<num_neurons[num_layers-2];k++)
-		{
-				
+		{	
 			lay[num_layers-2].neu[k].dw[j] = (lay[num_layers-1].neu[j].dz * lay[num_layers-2].neu[k].actv);
-			lay[num_layers-2].neu[k].dactv = lay[num_layers-2].neu[k].dactv + lay[num_layers-2].neu[k].out_weights[j] * lay[num_layers-1].neu[j].dz;
+			lay[num_layers-2].neu[k].dactv = lay[num_layers-2].neu[k].out_weights[j] * lay[num_layers-1].neu[j].dz;
 		}
 			
-		lay[num_layers-1].neu[j].db = lay[num_layers-1].neu[j].dz;			
+		lay[num_layers-1].neu[j].dbias = lay[num_layers-1].neu[j].dz;			
 	}
 
 	// Hidden Layers
@@ -356,7 +339,6 @@ void back_prop(int p)
 			{
 				lay[i].neu[j].dz = lay[i].neu[j].dactv;
 			}
-
 			else
 			{
 				lay[i].neu[j].dz = 0;
@@ -364,17 +346,15 @@ void back_prop(int p)
 
 			for(k=0;k<num_neurons[i-1];k++)
 			{
-
-				lay[i-1].neu[k].dw[j] = lay[i].neu[j].dz * lay[i-1].neu[k].actv;
-				
+				lay[i-1].neu[k].dw[j] = lay[i].neu[j].dz * lay[i-1].neu[k].actv;	
 				
 				if(i>1)
 				{
-					lay[i-1].neu[k].dactv = lay[i-1].neu[k].dactv + lay[i-1].neu[k].out_weights[j] * lay[i].neu[j].dz;
-				}					
+					lay[i-1].neu[k].dactv = lay[i-1].neu[k].out_weights[j] * lay[i].neu[j].dz;
+				}
 			}
 
-			lay[i].neu[j].db = lay[i].neu[j].dz;
+			lay[i].neu[j].dbias = lay[i].neu[j].dz;
 		}
 	}
 }
