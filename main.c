@@ -114,20 +114,20 @@ void  get_inputs()
 //Get Labels
 void get_desired_outputs()
 {
-        int i,j;
-        
-        for(i=0;i<num_training_ex;i++)
+    int i,j;
+    
+    for(i=0;i<num_training_ex;i++)
+    {
+        for(j=0;j<num_neurons[num_layers-1];j++)
         {
-            for(j=0;j<num_neurons[num_layers-1];j++)
-            {
-                printf("Enter the Desired Outputs (Labels) for training example[%d]...\n",i);
-                scanf("%f",&desired_outputs[i][j]);
-                printf("\n");
-            }
+            printf("Enter the Desired Outputs (Labels) for training example[%d]...\n",i);
+            scanf("%f",&desired_outputs[i][j]);
+            printf("\n");
         }
+    }
 }
 
-
+// Feed inputs to input layer
 void feed_input(int i)
 {
     int j;
