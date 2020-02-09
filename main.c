@@ -286,7 +286,8 @@ void forward_prop(void)
 				else
 				{
 					lay[i].neu[j].actv = 1/(1+exp(-lay[i].neu[j].z));
-					printf("OUTPUT: %f\n", lay[i].neu[j].actv);
+					printf("OUTPUT: %d\n", (int)round(lay[i].neu[j].actv));
+					printf("\n");
 				}
 			}
 		}
@@ -362,37 +363,17 @@ void back_prop(int p)
 // Test the trained network
 void test_nn(void) 
 {
-	printf("\n\nTest1:\n");
-	lay[0].neu[0].actv = 1;
-	printf("Input: %f\n",lay[0].neu[0].actv);
-	lay[0].neu[1].actv = 1;
-	printf("Input: %f\n",lay[0].neu[1].actv);
+	int i;
+	while(1)
+	{
+		printf("Enter input to test:\n");
 
-	forward_prop();
-
-	printf("\n\nTest2:\n");
-	lay[0].neu[0].actv = 1;
-	printf("Input: %f\n",lay[0].neu[0].actv);
-	lay[0].neu[1].actv = 0;
-	printf("Input: %f\n",lay[0].neu[1].actv);
-
-	forward_prop();
-
-	printf("\n\nTest3:\n");
-	lay[0].neu[0].actv = 0;
-	printf("Input: %f\n",lay[0].neu[0].actv);
-	lay[0].neu[1].actv = 1;
-	printf("Input: %f\n",lay[0].neu[1].actv);
-
-	forward_prop();
-
-	printf("\n\nTest4:\n");
-	lay[0].neu[0].actv = 0;
-	printf("Input: %f\n",lay[0].neu[0].actv);
-	lay[0].neu[1].actv = 0;
-	printf("Input: %f\n",lay[0].neu[1].actv);
-
-	forward_prop();
+		for(i=0;i<num_neurons[0];i++)
+		{
+			scanf("%f",&lay[0].neu[i].actv);
+		}
+		forward_prop();
+	}
 }
 
 // TODO: Add different Activation functions
