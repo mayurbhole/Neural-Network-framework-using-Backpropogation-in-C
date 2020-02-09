@@ -213,6 +213,7 @@ int initialize_weights(void)
     return SUCCESS_INIT_WEIGHTS;
 }
 
+// Train Neural Network
 void train_neural_net(void)
 {
     int i;
@@ -256,61 +257,61 @@ void update_weights(void)
 
 void forward_prop(void)
 {
-        int i,j,k;
+    int i,j,k;
 
-        for(i=1;i<num_layers;i++)
-        {   
-            for(j=0;j<num_neurons[i];j++)
+    for(i=1;i<num_layers;i++)
+    {   
+        for(j=0;j<num_neurons[i];j++)
+        {
+            lay[i].neu[j].z = lay[i].neu[j].bias;
+
+            for(k=0;k<num_neurons[i-1];k++)
             {
-                lay[i].neu[j].z = lay[i].neu[j].bias;
+                lay[i].neu[j].z  = lay[i].neu[j].z + ((lay[i-1].neu[k].out_weights[j])* (lay[i-1].neu[k].actv));
+            }
 
-                for(k=0;k<num_neurons[i-1];k++)
+            // Relu Activation Function for Hidden Layers
+            if(i < num_layers-1)
+            {
+                if((lay[i].neu[j].z) < 0)
                 {
-                    lay[i].neu[j].z  = lay[i].neu[j].z + ((lay[i-1].neu[k].out_weights[j])* (lay[i-1].neu[k].actv));
+                    lay[i].neu[j].actv = 0;
                 }
 
-                // Relu Activation Function for Hidden Layers
-                if(i < num_layers-1)
-                {
-                    if((lay[i].neu[j].z) < 0)
-                    {
-                        lay[i].neu[j].actv = 0;
-                    }
-
-                    else
-                    {
-                        lay[i].neu[j].actv = lay[i].neu[j].z;
-                    }
-                }
-                
-                // Sigmoid Activation function for Output Layer
                 else
                 {
-                    lay[i].neu[j].actv = 1/(1+exp(-lay[i].neu[j].z));
-                    printf("OUTPUT: %d\n", (int)round(lay[i].neu[j].actv));
-                    printf("\n");
+                    lay[i].neu[j].actv = lay[i].neu[j].z;
                 }
             }
+            
+            // Sigmoid Activation function for Output Layer
+            else
+            {
+                lay[i].neu[j].actv = 1/(1+exp(-lay[i].neu[j].z));
+                printf("OUTPUT: %d\n", (int)round(lay[i].neu[j].actv));
+                printf("\n");
+            }
         }
+    }
 }
 
 // Compute Total Cost
 void compute_cost(int i)
 {
-        int j;
-        float tmpcost=0;
-        float tcost=0;
-    
-        for(j=0;j<num_neurons[num_layers-1];j++)
-        {
-            tmpcost = desired_outputs[i][j] - lay[num_layers-1].neu[j].actv;
-            cost[j] = (tmpcost * tmpcost)/2;
-            tcost = tcost + cost[j];
-        }   
+    int j;
+    float tmpcost=0;
+    float tcost=0;
 
-        full_cost = (full_cost + tcost)/n;
-        n++;
-        // printf("Full Cost: %f\n",full_cost);
+    for(j=0;j<num_neurons[num_layers-1];j++)
+    {
+        tmpcost = desired_outputs[i][j] - lay[num_layers-1].neu[j].actv;
+        cost[j] = (tmpcost * tmpcost)/2;
+        tcost = tcost + cost[j];
+    }   
+
+    full_cost = (full_cost + tcost)/n;
+    n++;
+    // printf("Full Cost: %f\n",full_cost);
 }
 
 // Back Propogate Error
@@ -382,8 +383,8 @@ void test_nn(void)
 
 int dinit(void)
 {
-        // TODO:
-        // Free up all the structures
+    // TODO:
+    // Free up all the structures
 
-        return SUCCESS_DINIT;
+    return SUCCESS_DINIT;
 }
