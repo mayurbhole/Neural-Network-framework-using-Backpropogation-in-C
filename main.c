@@ -120,7 +120,7 @@ void get_desired_outputs()
     {
         for(j=0;j<num_neurons[num_layers-1];j++)
         {
-            printf("Enter the Desired Outputs (Labels) for training example[%d]...\n",i);
+            printf("Enter the Desired Outputs (Labels) for training example[%d]: \n",i);
             scanf("%f",&desired_outputs[i][j]);
             printf("\n");
         }
@@ -288,7 +288,7 @@ void forward_prop(void)
             else
             {
                 lay[i].neu[j].actv = 1/(1+exp(-lay[i].neu[j].z));
-                printf("OUTPUT: %d\n", (int)round(lay[i].neu[j].actv));
+                printf("Output: %d\n", (int)round(lay[i].neu[j].actv));
                 printf("\n");
             }
         }
