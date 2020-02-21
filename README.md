@@ -13,28 +13,28 @@ Enter number of neurons in layer[3]:  4
 
 Enter number of neurons in layer[4]:  1
 
-Created Layer: 1
-Number of Neurons in Layer 1: 2
-Neuron 1 in Layer 1 created
-Neuron 2 in Layer 1 created
+Created Layer: 1 <br />
+Number of Neurons in Layer 1: 2 <br />
+Neuron 1 in Layer 1 created <br />
+Neuron 2 in Layer 1 created <br />
 
-Created Layer: 2
-Number of Neurons in Layer 2: 4
-Neuron 1 in Layer 2 created
-Neuron 2 in Layer 2 created
-Neuron 3 in Layer 2 created
-Neuron 4 in Layer 2 created
+Created Layer: 2 <br />
+Number of Neurons in Layer 2: 4 <br />
+Neuron 1 in Layer 2 created <br />
+Neuron 2 in Layer 2 created <br />
+Neuron 3 in Layer 2 created <br />
+Neuron 4 in Layer 2 created <br />
 
-Created Layer: 3
-Number of Neurons in Layer 3: 4
-Neuron 1 in Layer 3 created
-Neuron 2 in Layer 3 created
-Neuron 3 in Layer 3 created
-Neuron 4 in Layer 3 created
+Created Layer: 3 <br />
+Number of Neurons in Layer 3: 4 <br />
+Neuron 1 in Layer 3 created <br />
+Neuron 2 in Layer 3 created <br />
+Neuron 3 in Layer 3 created <br />
+Neuron 4 in Layer 3 created <br />
 
-Created Layer: 4
-Number of Neurons in Layer 4: 1
-Neuron 1 in Layer 4 created
+Created Layer: 4 <br />
+Number of Neurons in Layer 4: 1 <br />
+Neuron 1 in Layer 4 created <br />
 
 Initializing weights...
 0:w[0][0]: 0.840188
