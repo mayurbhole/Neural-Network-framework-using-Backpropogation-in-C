@@ -1,4 +1,3 @@
-<meta name="google-site-verification" content="APiTrnY8096NLZZykRABFxdIDC_bJcc7LYFJMPljdVo" />
 # Neural-Network-framework-using-Backpropogation-in-C
 
 ## Usage
@@ -83,3 +82,5 @@ Enter input to test: 1 0 <br />
 Output: 1 <br />
 Enter input to test: 1 1 <br />
 Output: 0 <br />
+
+<meta name="google-site-verification" content="APiTrnY8096NLZZykRABFxdIDC_bJcc7LYFJMPljdVo" />
