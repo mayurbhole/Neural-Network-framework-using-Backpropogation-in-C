@@ -208,7 +208,11 @@ int initialize_weights(void)
         }
     }   
     printf("\n");
-    lay[num_layers-1].neu[num_layers-1].bias = ((double)rand())/((double)RAND_MAX);
+    
+    for (j=0; j<num_neurons[num_layers-1]; j++)
+    {
+        lay[num_layers-1].neu[j].bias = ((double)rand())/((double)RAND_MAX);
+    }
 
     return SUCCESS_INIT_WEIGHTS;
 }
