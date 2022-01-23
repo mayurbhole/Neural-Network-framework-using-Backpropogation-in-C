@@ -18,6 +18,8 @@ int main(void)
 {
     int i;
 
+    srand(time(0));
+
     printf("Enter the number of Layers in Neural Network:\n");
     scanf("%d",&num_layers);
 
